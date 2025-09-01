@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+* {
+  outline: 0;
+  /* border: 0; */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* body { */
+  /* background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif; */
+/* } */
+
+
+
+.main-color {
+  color: #772719;
+}
+
+.boder-radius {
+  border-radius: 11rem !important;
+}
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* .header-menu::after{
+  border: 2px solid #772719;
+
+} */
+  .bg-home {
+    background-image: url(../assets/bg.png);
+  }
+
+  .bg-menu {
+    background-image: url(../assets/menu.avif);
+  }
+
+  @keyframes zoom-in-out {
+
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.95;
+    }
+
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes rotate-animation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(180deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-zoom-smooth {
+    animation: zoom-in-out 8s ease-in-out infinite;
+  }
+
+  .rotate-animation {
+    animation: rotate-animation 15s linear infinite;
+  }
+}
+
+.main-btn{
+  @apply text-white cursor-pointer bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-semibold md:font-medium rounded-lg hover:bg-red-700 transition-all text-sm px-3 md:px-5 py-2 md:py-2.5 cursor-pointer;
+};
+.cart-btn{
+  @apply text-white cursor-pointer bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300  md:font-medium rounded-sm md:rounded-lg hover:bg-red-700 transition-all text-sm px-5 p-1 md:py-2.5
+};
+.heading-admin{
+  @apply mb-3 font-semibold text-sm md:text-2xl md:font-bold text-red-500 text-3xl
+};
+
+
