@@ -10,14 +10,12 @@ import { safeLocalStorage } from "@/utils/safeLocalStorage";
 
 export default function Cart() {
     const token = safeLocalStorage.get("hadramoot");
-    if (!token) {
-        return <EmptyCart />;
-    }
     const { data, isLoading, error } = useCartDelivary({ token });
     const { mutate: updateCart } = useUpdateCart();
     const { mutate: deleteOneItemFromCart } = useDeleteOneOfMenu();
     const { mutate: deleteAllCart } = useDeleteAll();
-
+    
+    if (!token) return <EmptyCart />;
     if (isLoading) return <p className="text-center">جارٍ التحميل...</p>;
     if (error) return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
     return (
