@@ -9,7 +9,11 @@ import { safeLocalStorage } from "@/utils/safeLocalStorage";
 
 
 export default function Cart() {
-    const { data, isLoading, error } = useCartDelivary({ token: safeLocalStorage.get("hadramoot") });
+    const token = safeLocalStorage.get("hadramoot");
+    if (!token) {
+        return <EmptyCart />;
+    }
+    const { data, isLoading, error } = useCartDelivary({ token });
     const { mutate: updateCart } = useUpdateCart();
     const { mutate: deleteOneItemFromCart } = useDeleteOneOfMenu();
     const { mutate: deleteAllCart } = useDeleteAll();
