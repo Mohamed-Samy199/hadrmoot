@@ -19,7 +19,7 @@ export default function Menu() {
             <div className="flex justify-center my-6">
                 <input
                     type="text"
-                    placeholder="ابحث عن اسم الوجبة..."
+                    placeholder="ابحث عن اسم الوجبة...."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="border border-red-400 rounded-lg px-4 py-2 w-[90%] max-w-md text-center shadow"
