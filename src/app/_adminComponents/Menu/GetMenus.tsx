@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useCategories } from "@/lib/queries/categoryQuery";
 import Link from "next/link";
-import PopupOrder from "../PopupOrder/PopupOrder";
 import { useState } from "react";
 import { CategoryType, MenuItemType } from "@/lib/graphql/categoryGraph";
 import { LayoutGrid, List } from "lucide-react";
+import PopupOrder from "@/app/_components/PopupOrder/PopupOrder";
 
 export default function Menu() {
     const { data, isLoading, error } = useCategories();
