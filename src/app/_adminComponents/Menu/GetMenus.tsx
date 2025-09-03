@@ -1,100 +1,155 @@
 "use client";
 
-import { useMenuDelete, useMenusPaginated } from "@/lib/queries/menuQuery";
 import Image from "next/image";
+import { useCategories } from "@/lib/queries/categoryQuery";
 import Link from "next/link";
+import PopupOrder from "../PopupOrder/PopupOrder";
 import { useState } from "react";
-import Pagination from "../Dashboard/Pagination";
+import { CategoryType, MenuItemType } from "@/lib/graphql/categoryGraph";
+import { LayoutGrid, List } from "lucide-react";
 
-type Image = {
-    secure_url: string
-};
+export default function Menu() {
+    const { data, isLoading, error } = useCategories();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSimpleView, setIsSimpleView] = useState(false); // 🔥 وضع العرض
 
-type Category = {
-    _id: string;
-    name: string;
-};
-
-type Menus = {
-    _id: string;
-    name: string;
-    image: Image;
-    createdAt?: string;
-    descraption: string;
-    price: number;
-    stock: number;
-    discount: number;
-    finalPrice: number;
-    categoryId: Category;
-};
-
-
-export default function GetMenus() {
-    const [page, setPage] = useState(1);
-    const limit = 4;
-
-    const { data, isLoading, error } = useMenusPaginated(page, limit);
-    const { mutate: deleteMenu } = useMenuDelete();
-
-    if (isLoading) {
-        return <p className="text-center">جارٍ التحميل...</p>;
-    }
-
-    if (error) {
-        return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
-    };
-
-    const totalPages = data?.totalCount ? Math.ceil(data.totalCount / limit) : 1;
+    if (isLoading) return <p className="text-center">جارٍ التحميل...</p>;
+    if (error) return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
 
     return (
         <>
-            <tbody>
-                {data?.data &&
-                    (data?.data as Menus[]).map((menu) => (
-                        <tr
-                            key={menu._id}
-                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                            <td
-                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  hover:text-blue-500 hover:underline"
-                            >
-                                <Link href={`/menu/${menu.categoryId._id}`}>  {menu.name.length > 25 ? menu.name.substring(0, 25) + "..." : menu.name}</Link>
-                            </td>
+            {/* زرار التبديل */}
 
-                            <td className="px-6 py-4">{menu.descraption}</td>
-                            <td className="px-6 py-4">{menu.price}</td>
-                            <td className="px-6 py-4">{menu.finalPrice}</td>
-                            <td className="px-6 py-4">{menu.discount}</td>
-                            <td className="px-6 py-4">{menu.stock}</td>
-                            <td className="px-6 py-4"><Image src={menu.image.secure_url} alt=  {menu.name.length > 25 ? menu.name.substring(0, 25) + "..." : menu.name} height={100} width={100} /></td>
 
-                            <td className="px-6 py-4">
-                                {menu.createdAt
-                                    ? new Date(menu.createdAt).toLocaleDateString("ar-EG")
-                                    : "—"}
-                            </td>
+            {/* البحث */}
+            <div className="flex justify-center my-6 gap-2">
+                <input
+                    type="text"
+                    placeholder="ابحث عن اسم الوجبة..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="border border-red-400 rounded-lg px-4 py-2 w-[90%] max-w-md text-center shadow"
+                />
+                <div className="flex justify-center">
+                    <button
+                        onClick={() => setIsSimpleView(!isSimpleView)}
+                        className="p-2 border border-red-400 rounded-lg bg-gray-200 hover:bg-red-500 hover:text-white transition cursor-pointer"
+                        aria-label="Toggle view"
+                    >
+                        {isSimpleView ? (
+                            <LayoutGrid className="w-6 h-6" />
+                        ) : (
+                            <List className="w-6 h-6" />
+                        )}
+                    </button>
+                </div>
+            </div>
 
-                            <td className="px-6 py-4 cursor-pointer text-blue-500 hover:underline" >
-                                <Link href={`/dashboard/menu-managment/${menu._id}`}>تعديل</Link>
-                            </td>
+            {data &&
+                data.map((category: CategoryType) => {
+                    const filteredMenu = category.menu.filter((item: MenuItemType) =>
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    if (filteredMenu.length === 0) return null;
 
-                            <td className="px-6 py-4 cursor-pointer text-red-500 hover:underline"
-                                onClick={() => {
-                                    if (window.confirm("هل انت متأكد من الحذف؟")) {
-                                        deleteMenu({ catId: menu.categoryId._id, menuId: menu._id })
-                                    }
-                                }}
-                            >
-                                حذف
-                            </td>
-                        </tr>
-                    ))}
-            </tbody>
+                    return (
+                        <div key={category._id} className="mb-6 mx-2">
+                            <div className="flex items-center justify-center gap-4 my-6">
+                                <div className="flex-grow border-t-3 border-red-500"></div>
+                                <div className="flex items-center gap-2 text-red-600 font-semibold text-lg">
+                                    <Link href={`/menu/${category._id}`}>
+                                        <span>{category.name}</span>
+                                    </Link>
+                                </div>
+                                <div className="flex-grow border-t-3 border-red-500"></div>
+                            </div>
 
-            {totalPages > 1 && (
-                <Pagination page={page} setPage={setPage} totalPages={totalPages} />
-            )}
-
+                            {/* ✅ لو العرض العادي */}
+                            {!isSimpleView ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {filteredMenu.map((item: MenuItemType) => (
+                                        <div key={item._id} className="relative">
+                                            <div className="p-4 bg-gray-200 flex justify-between gap-3 rounded-xl shadow-2xl h-full">
+                                                <div className="w-[40%]">
+                                                    <div className="w-full aspect-[5/4] overflow-hidden rounded-lg border-2 border-red-400 relative">
+                                                        <Image
+                                                            src={item.image?.secure_url || "/fallback.png"}
+                                                            alt={item.name}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="w-[38%] md:w-[45%]">
+                                                    <h4 className="text-sm md:text-2xl font-bold mb-3">
+                                                        {item.name}
+                                                    </h4>
+                                                    <p className="text-sm font-semibold text-gray-600">
+                                                        {item.descraption}
+                                                    </p>
+                                                </div>
+                                                <div className="w-[22%] md:w-[15%]">
+                                                    <div className="flex flex-col justify-between h-full">
+                                                        <div>
+                                                            <h5 className="font-bold text-sm md:text-xl">
+                                                                {item.finalPrice} جنيه
+                                                            </h5>
+                                                            {item.price && item.discount > 0 && (
+                                                                <>
+                                                                    <h6 className="text-sm text-red-400 py-1">
+                                                                        خصم {item.discount}%
+                                                                    </h6>
+                                                                    <h5
+                                                                        className="font-bold text-sm md:text-xl text-gray-600"
+                                                                        style={{ textDecorationLine: "line-through" }}
+                                                                    >
+                                                                        {item.price} جنيه
+                                                                    </h5>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        <PopupOrder menuId={item._id} orderName={item.name} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                /* ✅ العرض المبسط */
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {filteredMenu.map((item: MenuItemType) => (
+                                        <div
+                                            key={item._id}
+                                            className="flex justify-between items-center bg-gray-100 p-3 rounded-lg shadow"
+                                        >
+                                            <h4 className="text-sm md:text-xl font-bold mb-3">
+                                                {item.name}
+                                            </h4>
+                                            <h5 className="font-bold text-sm md:text-xl">
+                                                {item.finalPrice} جنيه
+                                            </h5>
+                                            {item.price && item.discount > 0 && (
+                                                <>
+                                                    <h6 className="text-sm text-red-400 py-1">
+                                                        خصم {item.discount}%
+                                                    </h6>
+                                                    <h5
+                                                        className="font-bold text-sm md:text-xl text-gray-600"
+                                                        style={{ textDecorationLine: "line-through" }}
+                                                    >
+                                                        {item.price} جنيه
+                                                    </h5>
+                                                </>
+                                            )}
+                                            <PopupOrder menuId={item._id} orderName={item.name} />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
         </>
-    )
+    );
 }
