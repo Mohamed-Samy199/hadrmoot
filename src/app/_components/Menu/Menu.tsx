@@ -118,7 +118,7 @@ export default function Menu() {
                                     {filteredMenu.map((item: MenuItemType) => (
                                         <div
                                             key={item._id}
-                                            className="flex justify-between items-center bg-gray-100 p-3 rounded-lg shadow"
+                                            className="flex justify-between items-center bg-gray-100 p-3 rounded-lg shadow-2xl"
                                         >
                                             <h4 className="text-sm md:text-xl font-bold mb-3">
                                                 {item.name}
