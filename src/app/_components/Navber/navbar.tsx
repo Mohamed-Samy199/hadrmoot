@@ -20,6 +20,7 @@ export default function Navbar() {
                     <ul className="flex flex-col md:flex-row md:space-x-6 mt-4 md:mt-0">
                         <li><Link href="/" className="block dark:text-white py-2 px-3 hover:text-red-300">الصفحة الرئيسية</Link></li>
                         <li><Link href="/menu" className="block dark:text-white py-2 px-3 hover:text-red-300">المينو</Link></li>
+                        <li><Link href="/about" className="block dark:text-white py-2 px-3 hover:text-red-300">عننا</Link></li>
                         <NavCart />
                         <NavAuth />
                     </ul>
