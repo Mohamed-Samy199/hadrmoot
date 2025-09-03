@@ -5,9 +5,9 @@ export default function About() {
     return (
         <div className="container mx-auto px-4 py-8">
             {/* العنوان */}
-            <h1 className="text-3xl font-bold text-center text-red-600 mb-6">
+            <h2 className="text-3xl font-bold text-center text-red-600 mb-6">
                 عن مطعم حضرموت ومشويات الخليج 🍽️🔥
-            </h1>
+            </h2>
 
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* الصورة */}
@@ -35,7 +35,7 @@ export default function About() {
 
                     {/* العنوان */}
                     <div className="mb-4">
-                        <h2 className="text-xl font-semibold text-gray-900">العنوان:</h2>
+                        <h3 className="text-xl font-semibold text-gray-900">العنوان:</h3>
                         <p className="text-gray-700">
                             الإسماعيلية – 7 شارع عطية – بجوار كازيون ونادي الكهرباء – المرحلة
                             الخامسة
@@ -44,7 +44,7 @@ export default function About() {
 
                     {/* أرقام التليفون */}
                     <div className="mb-4">
-                        <h2 className="text-xl font-semibold text-gray-900">أرقام التليفون:</h2>
+                        <h3 className="text-xl font-semibold text-gray-900">أرقام التليفون:</h3>
                         <ul className="list-disc pl-5 px-3 text-gray-700">
                             <li>01090814907</li>
                             <li>01143542262</li>
