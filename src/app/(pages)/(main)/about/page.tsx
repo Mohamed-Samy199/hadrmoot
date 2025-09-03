@@ -44,8 +44,8 @@ export default function About() {
 
                     {/* أرقام التليفون */}
                     <div className="mb-4">
-                        <h2 className="text-xl font-semibold text-gray-900">📞 أرقام التليفون:</h2>
-                        <ul className="list-disc pl-5 text-gray-700">
+                        <h2 className="text-xl font-semibold text-gray-900">أرقام التليفون:</h2>
+                        <ul className="list-disc pl-5 px-3 text-gray-700">
                             <li>01090814907</li>
                             <li>01143542262</li>
                             <li>01206891908</li>
