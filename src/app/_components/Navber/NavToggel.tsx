@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type Props = {
     children: React.ReactNode;
 };
 export default function NavToggle({ children }: Props) {
     const [isOpen, setIsOpen] = useState(false);
+
+    const pathname = usePathname();
+
+    // كل ما يتغير الـ route → اقفل المينيو
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname]);
+
     return (
         <>
             {/* Toggle button */}
