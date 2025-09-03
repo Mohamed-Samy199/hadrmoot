@@ -58,7 +58,7 @@ export default function GetMenus() {
                             <td
                                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  hover:text-blue-500 hover:underline"
                             >
-                                <Link href={`/menu/${menu.categoryId._id}`}>{menu.name}</Link>
+                                <Link href={`/menu/${menu.categoryId._id}`}>  {menu.name.length > 25 ? menu.name.substring(0, 25) + "..." : menu.name}</Link>
                             </td>
 
                             <td className="px-6 py-4">{menu.descraption}</td>
@@ -66,7 +66,7 @@ export default function GetMenus() {
                             <td className="px-6 py-4">{menu.finalPrice}</td>
                             <td className="px-6 py-4">{menu.discount}</td>
                             <td className="px-6 py-4">{menu.stock}</td>
-                            <td className="px-6 py-4"><Image src={menu.image.secure_url} alt={menu.name} height={100} width={100} /></td>
+                            <td className="px-6 py-4"><Image src={menu.image.secure_url} alt=  {menu.name.length > 25 ? menu.name.substring(0, 25) + "..." : menu.name} height={100} width={100} /></td>
 
                             <td className="px-6 py-4">
                                 {menu.createdAt
