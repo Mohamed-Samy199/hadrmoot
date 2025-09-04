@@ -7,7 +7,7 @@ type PaginationProps = {
 };
 export default function Pagination({ page, setPage, totalPages }: PaginationProps) {
     return (
-        <div className="flex justify-center items-center gap-2 mt-4">
+        <div className="flex justify-center items-center gap-2 my-4">
             <button
                 onClick={() => setPage((p) => Math.max(p - 1, 1))}
                 disabled={page === 1}
