@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCategories } from "@/lib/queries/categoryQuery";
+import { useCategories, useCategoriesPaginated } from "@/lib/queries/categoryQuery";
 import Link from "next/link";
 import PopupOrder from "../PopupOrder/PopupOrder";
 import { useState } from "react";
@@ -10,11 +10,11 @@ import { LayoutGrid, List } from "lucide-react";
 import Pagination from "@/app/_adminComponents/Dashboard/Pagination";
 
 export default function Menu() {
-    const { data, isLoading, error } = useCategories();
-    const [searchTerm, setSearchTerm] = useState("");
-    const [isSimpleView, setIsSimpleView] = useState(false);
     const [page, setPage] = useState(1);
     const limit = 4;
+    const { data, isLoading, error } = useCategoriesPaginated(page, limit);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSimpleView, setIsSimpleView] = useState(false);
 
     if (isLoading) return <p className="text-center">جارٍ التحميل...</p>;
     if (error) return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
