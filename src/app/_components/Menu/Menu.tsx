@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCategories, useCategoriesPaginated } from "@/lib/queries/categoryQuery";
+import { useCategoriesPaginated } from "@/lib/queries/categoryQuery";
 import Link from "next/link";
 import PopupOrder from "../PopupOrder/PopupOrder";
 import { useState } from "react";
@@ -10,15 +10,16 @@ import { LayoutGrid, List } from "lucide-react";
 import Pagination from "@/app/_adminComponents/Dashboard/Pagination";
 
 export default function Menu() {
-    const [page, setPage] = useState(1);
-    const limit = 4;
-    const { data, isLoading, error } = useCategoriesPaginated(page, limit);
     const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
     const [isSimpleView, setIsSimpleView] = useState(false);
+    const limit = 15;
+    const { data, isLoading, error } = useCategoriesPaginated(page, limit);
+
+    const totalPages = data?.totalCount ? Math.ceil(data.totalCount / limit) : 1;
 
     if (isLoading) return <p className="text-center">جارٍ التحميل...</p>;
     if (error) return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
-    const totalPages = data?.totalCount ? Math.ceil(data.totalCount / limit) : 1;
 
     return (
         <>
@@ -46,8 +47,8 @@ export default function Menu() {
                 </div>
             </div>
 
-            {data &&
-                data.map((category: CategoryType) => {
+            {data?.data &&
+                data?.data?.map((category: CategoryType) => {
                     const filteredMenu = category.menu.filter((item: MenuItemType) =>
                         item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     );
@@ -65,7 +66,6 @@ export default function Menu() {
                                 <div className="flex-grow border-t-3 border-red-500"></div>
                             </div>
 
-                            {/* ✅ لو العرض العادي */}
                             {!isSimpleView ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {filteredMenu.map((item: MenuItemType) => (
@@ -117,7 +117,6 @@ export default function Menu() {
                                     ))}
                                 </div>
                             ) : (
-                                /* ✅ العرض المبسط */
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {filteredMenu.map((item: MenuItemType) => (
                                         <div
