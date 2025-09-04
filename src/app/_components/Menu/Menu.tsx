@@ -7,19 +7,23 @@ import PopupOrder from "../PopupOrder/PopupOrder";
 import { useState } from "react";
 import { CategoryType, MenuItemType } from "@/lib/graphql/categoryGraph";
 import { LayoutGrid, List } from "lucide-react";
+import Pagination from "@/app/_adminComponents/Dashboard/Pagination";
 
 export default function Menu() {
     const { data, isLoading, error } = useCategories();
     const [searchTerm, setSearchTerm] = useState("");
     const [isSimpleView, setIsSimpleView] = useState(false);
+    const [page, setPage] = useState(1);
+    const limit = 4;
 
     if (isLoading) return <p className="text-center">جارٍ التحميل...</p>;
     if (error) return <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>;
+    const totalPages = data?.totalCount ? Math.ceil(data.totalCount / limit) : 1;
 
     return (
         <>
-            <div className="flex justify-center my-6 gap-2">
-            {/* البحث */}
+            <div className="flex justify-center my-6 gap-2 px-1">
+                {/* البحث */}
                 <input
                     type="text"
                     placeholder="ابحث عن اسم الوجبة..."
@@ -147,6 +151,10 @@ export default function Menu() {
                         </div>
                     );
                 })}
+
+            {totalPages > 1 && (
+                <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+            )}
         </>
     );
 }
