@@ -13,7 +13,7 @@ export default function Menu() {
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
     const [isSimpleView, setIsSimpleView] = useState(false);
-    const limit = 15;
+    const limit = 10;
     const { data, isLoading, error } = useCategoriesPaginated(page, limit);
 
     const totalPages = data?.totalCount ? Math.ceil(data.totalCount / limit) : 1;
