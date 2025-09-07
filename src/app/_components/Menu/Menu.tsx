@@ -127,7 +127,7 @@ export default function Menu() {
                                                 {item.name}
                                             </h4>
 
-                                            <div className="flex gap-3 justify-between items-center">
+                                            <div className="flex gap-3 gap-6 justify-between items-center">
                                                 <h5 className="font-bold text-sm md:text-xl">
                                                     {item.finalPrice} جنيه
                                                 </h5>
