@@ -1,10 +1,10 @@
 import Cart from '@/app/_components/Cart/Cart'
-import ProtectedRoute from '@/utils/ProtectedRoute'
+// import ProtectedRoute from '@/utils/ProtectedRoute'
 import React from 'react'
 
 export default function CartPage() {
     return (
-        <ProtectedRoute allowedRoles={["User"]}>
+        // <ProtectedRoute allowedRoles={["User"]}>
             <section className='cart'>
                 <div className="relative bg-cover bg-center h-[48vh] w-full  bg-menu flex justify-center items-center">
                     <div className="absolute inset-0 bg-black/50"></div>
@@ -18,6 +18,6 @@ export default function CartPage() {
                     <Cart />
                 </div>
             </section>
-        </ProtectedRoute>
+        // </ProtectedRoute>
     )
 }
