@@ -94,7 +94,8 @@ export default function UpdateMenu() {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
             setSelectImage(e.target.files[0]);
-        }
+            setImage(e.target.files[0]); 
+        };
     };
 
     const initialValues: MenuFormValues = {
