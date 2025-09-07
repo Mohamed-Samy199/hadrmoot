@@ -126,22 +126,25 @@ export default function Menu() {
                                             <h4 className="text-sm md:text-xl font-bold mb-3">
                                                 {item.name}
                                             </h4>
-                                            <h5 className="font-bold text-sm md:text-xl">
-                                                {item.finalPrice} جنيه
-                                            </h5>
-                                            {item.price && item.discount > 0 && (
-                                                <>
-                                                    <h6 className="text-sm text-red-400 py-1">
-                                                        خصم {item.discount}%
-                                                    </h6>
-                                                    <h5
-                                                        className="font-bold text-sm md:text-xl text-gray-600"
-                                                        style={{ textDecorationLine: "line-through" }}
-                                                    >
-                                                        {item.price} جنيه
-                                                    </h5>
-                                                </>
-                                            )}
+
+                                            <div className="flex gap-3">
+                                                <h5 className="font-bold text-sm md:text-xl">
+                                                    {item.finalPrice} جنيه
+                                                </h5>
+                                                {item.price && item.discount > 0 && (
+                                                    <>
+                                                        <h6 className="text-sm text-red-400 py-1">
+                                                            خصم {item.discount}%
+                                                        </h6>
+                                                        <h5
+                                                            className="font-bold text-sm md:text-xl text-gray-600"
+                                                            style={{ textDecorationLine: "line-through" }}
+                                                        >
+                                                            {item.price} جنيه
+                                                        </h5>
+                                                    </>
+                                                )}
+                                            </div>
                                             <PopupOrder menuId={item._id} orderName={item.name} />
                                         </div>
                                     ))}
