@@ -144,8 +144,8 @@ export default function Menu() {
                                                         </h5>
                                                     </>
                                                 )}
+                                                <PopupOrder menuId={item._id} orderName={item.name} />
                                             </div>
-                                            <PopupOrder menuId={item._id} orderName={item.name} />
                                         </div>
                                     ))}
                                 </div>
