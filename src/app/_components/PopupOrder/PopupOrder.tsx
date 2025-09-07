@@ -81,7 +81,7 @@ export default function PopupOrder({ menuId, orderName }: PopupOrderProps) {
         <div>
             <button
                 onClick={toggleModal}
-                className='main-btn'
+                className='main-btn my-2'
                 type="button"
             >
                 طلب
